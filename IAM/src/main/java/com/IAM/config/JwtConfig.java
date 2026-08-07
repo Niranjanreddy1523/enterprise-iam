@@ -1,4 +1,4 @@
-/*package com.IAM.config;
+package com.IAM.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -20,4 +20,3 @@ public class JwtConfig {
         return expiration;
     }
 }
-*/

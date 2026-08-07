@@ -1,4 +1,4 @@
-/*package com.IAM.service;
+package com.IAM.service;
 
 import java.util.Optional;
 
@@ -38,4 +38,3 @@ public class AuthService {
 	    refreshTokenRepository.deleteByUserId(userId);
 	}
 }
-*/

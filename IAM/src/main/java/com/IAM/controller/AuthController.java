@@ -1,4 +1,4 @@
-/*package com.IAM.controller;
+package com.IAM.controller;
 
 import com.IAM.entity.User;
 import com.IAM.service.AuthService;
@@ -37,4 +37,3 @@ public class AuthController {
     }
 }
 
-*/

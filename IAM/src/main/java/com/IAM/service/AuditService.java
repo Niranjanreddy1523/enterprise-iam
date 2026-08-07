@@ -1,4 +1,4 @@
-/*package com.IAM.service;
+package com.IAM.service;
 
 import java.util.List;
 
@@ -20,8 +20,7 @@ public class AuditService {
         return auditLogRepository.save(auditLog);
     }
 
-public List<AuditLog> getLogsByUser(Long userId) {
-    return auditLogRepository.findByUserId(userId);
+	/* public List<AuditLog> getLogsByUser(Long userId) {
+	return auditLogRepository.findByUserId(userId);
+	}*/
 }
-}
-*/

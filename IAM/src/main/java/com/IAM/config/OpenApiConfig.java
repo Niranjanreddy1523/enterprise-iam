@@ -1,4 +1,4 @@
-/*package com.IAM.config;
+package com.IAM.config;
 
 
 
@@ -20,4 +20,3 @@ public class OpenApiConfig {
                 .description("Identity and Access Management API documentation"));
     }
 }
-*/
