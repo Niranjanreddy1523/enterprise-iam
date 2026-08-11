@@ -1,9 +1,8 @@
 package com.IAM.controller;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
+    
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
@@ -38,14 +38,24 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+//    @GetMapping("/{id}")
+//   // @PreAuthorize("hasAuthority('PROJECT_MANAGER')")
+//    public ResponseEntity<User> getUserById(@PathVariable Long id) 
+//    {
+//		return userService.getUserById(id)
+//		        .map(ResponseEntity::ok)
+//		        .orElse(ResponseEntity.notFound().build());
+//    }
+    
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('PROJECT_MANAGER')")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) 
-    {
-		return userService.getUserById(id)
-		        .map(ResponseEntity::ok)
-		        .orElse(ResponseEntity.notFound().build());
+    @PreAuthorize("hasAnyAuthority('DB_ADMIN','FRONTEND_DEVELOPER')")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
+        return user.map(ResponseEntity::ok)
+                   .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id,

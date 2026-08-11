@@ -26,12 +26,19 @@ public class AuthService {
 
     public User register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        System.out.println(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
 	 public Optional<User> login(String username, String rawPassword) {
-	    return userRepository.findByUsername(username)
+		 Optional<User> byUsername = userRepository.findByUsername(username);
+	     Optional<User> filter = byUsername	    		 
 	            .filter(user -> passwordEncoder.matches(rawPassword, user.getPassword()));
+	    if (!filter.isPresent()) {
+			 System.out.println("Error with not matching");
+		}
+	    
+	    return filter;
 	}
 	
 	public void logout(Long userId) {

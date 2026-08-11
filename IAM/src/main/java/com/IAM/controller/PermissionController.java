@@ -28,7 +28,7 @@ public class PermissionController {
         return ResponseEntity.ok(permissionService.createPermission(permission));
     }
 
-    @GetMapping
+    @GetMapping("/find")
     public ResponseEntity<List<Permission>> getAllPermissions() {
         return ResponseEntity.ok(permissionService.getAllPermissions());
     }

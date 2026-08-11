@@ -2,7 +2,10 @@ package com.IAM.config;
 
 
 
+import java.util.Base64;
 import java.util.Date;
+
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,19 +19,23 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
 
     @Autowired private JwtConfig jwtConfig;
+    
+    private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtConfig.getSecret()));
+    }
 
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
             .setSubject(userDetails.getUsername())
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
-            .signWith(Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes()), SignatureAlgorithm.HS256)
+            .signWith(getSigningKey(), SignatureAlgorithm.HS256)
             .compact();
     }
 
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
-            .setSigningKey(Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes()))
+            .setSigningKey(getSigningKey())
             .build()
             .parseClaimsJws(token)
             .getBody()
@@ -41,7 +48,7 @@ public class JwtUtil {
 
     private boolean isTokenExpired(String token) {
         Date expiration = Jwts.parserBuilder()
-            .setSigningKey(Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes()))
+            .setSigningKey(getSigningKey())
             .build()
             .parseClaimsJws(token)
             .getBody()
