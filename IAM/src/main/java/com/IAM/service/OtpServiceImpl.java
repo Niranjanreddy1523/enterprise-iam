@@ -37,7 +37,7 @@ public class OtpServiceImpl implements OtpService {
                 .filter(o -> o.getExpiry().isAfter(LocalDateTime.now()))
                 .findFirst()
                 .map(o -> {
-                    otpRepository.delete(o); // invalidate once used
+                    otpRepository.delete(o); 
                     return true;
                 })
                 .orElse(false);
